@@ -1,0 +1,564 @@
+var piclickRcv = (function () {
+
+  var setCookie = function(name, value, hour) {
+    var date = new Date();
+    date.setTime(date.getTime() + hour * 60 * 60 * 1000);
+    document.cookie = name + '=' + value + ';SameSite=None; Secure;expires=' + date.toUTCString() + ';';
+  };
+
+  var piclick_params = Object();
+  piclick_params.hostname = location.hostname;
+
+  function get_query(){ 
+    var url = document.location.href; 
+    var qs = url.substring(url.indexOf('?') + 1).split('&'); 
+    for(var i = 0, result = {}; i < qs.length; i++){ 
+      qs[i] = qs[i].split('='); 
+      result[qs[i][0]] = decodeURIComponent(qs[i][1]); 
+    } 
+    return result;     
+  }
+
+  // 디바이스 체크
+  var filter = "win16|win32|win64|mac|macintel";
+  piclick_params.device = "p";
+  if (navigator.platform) {
+    if (filter.indexOf(navigator.platform.toLocaleLowerCase()) < 0) {
+      piclick_params.device = "m";
+    } 
+  }
+  // clicknfunny...
+  // if(window.hasOwnProperty( "roosevelt_params" )) {
+  // 	piclick_params = roosevelt_params;
+  // 	piclick_params.type = 'roosevelt';
+  //       if(window.hasOwnProperty( "mmc_obj" )) piclick_params.userinfo = mmc_obj;
+  // }
+  // piclick media...
+  if (window.hasOwnProperty("psrmedia_params")) {
+    piclick_params = psrmedia_params || window.psrmedia_params;
+    if (window.hasOwnProperty("mmc_obj")) piclick_params.userinfo = mmc_obj;    
+  }
+
+  if (window.hasOwnProperty("CAFE24API")) {
+    //piclick_params = CAFE24API;
+    piclick_params.type = 'cafe24';
+    (function (CAFE24API) {
+      // CAFE24API 객체를 통해 SDK 메소드를 사용할 수 있습니다.
+      piclick_params.mall_id = CAFE24API.MALL_ID;
+
+      CAFE24API.getCustomerIDInfo(function (err, res) {
+        if (err) {
+          console.log(err);
+          // 오류 발생시 Error 개체입니다.
+          // name, message 속성을 확인할 수 있습니다.
+          // res 개체를 통해 상세한 오류메세지 확인이 가능합니다.
+        } else {
+          // res 개체를 통해 응답 메세지를 확인할 수 있습니다.
+          if (res.id.member_id) {
+            piclick_params.user_id = res.id.member_id;
+          } else {
+            piclick_params.guest_id = res.id.guest_id;
+          }
+          //console.log("psrmedia script user id = " + res.id.member_id + "==" + res.id.guest_id);
+        }
+      });
+    })(CAFE24API.init({
+      client_id: 'e8ZcKju7eUlPiTZ0d3jV2O'//,  // 사용할 앱의 App Key를 설정해 주세요.
+      //version : '2019-12-11'   // 적용할 버전을 설정해 주세요.
+    }));
+
+    var pagelist = document.querySelectorAll('meta[name="path_role"]');    
+
+    var pageID;
+    for(var i=0; i<pagelist.length; i++) {
+      pageID = pagelist[i].content;      
+      if(pageID == "PRODUCT_DETAIL") break;
+      if(pageID == "ORDER_ORDERRESULT") break;
+      if(pageID == "ORDER_BASKET") break;
+      if(pageID == "PRODUCT_SEARCH") break;
+      if(pageID == "PRODUCT_LIST") break;
+      if(pageID == "MYSHOP_WISHLIST") break;
+      //if(pageID == "MAIN") break;
+      pageID = "";
+    }
+   
+    var keyword = "";
+    var sendData = Object();
+
+    piclick_params.pageID = pageID;
+
+    if (location.href.indexOf('ref=piclick') > -1) {
+      sendData.ad_click = 1;
+      sendData.url = document.location.href;
+    }
+    else {
+      sendData.ad_click = 0;
+    }
+
+    switch (pageID) {
+      case "ORDER_ORDERRESULT": // 주문 완료...
+        //console.log(EC_FRONT_EXTERNAL_SCRIPT_VARIABLE_DATA);
+        //sendData = EC_FRONT_EXTERNAL_SCRIPT_VARIABLE_DATA;
+
+        sendData.order_id = EC_FRONT_EXTERNAL_SCRIPT_VARIABLE_DATA.order_id;
+        sendData.payed_amount = EC_FRONT_EXTERNAL_SCRIPT_VARIABLE_DATA.payed_amount;
+        sendData.items = Array();
+
+        EC_FRONT_EXTERNAL_SCRIPT_VARIABLE_DATA.order_product.forEach(function (element, idx) {
+          var item = Object();
+          item.no = element.product_no;
+          item.idx = idx;
+          item.price = element.product_price;
+          item.qty = element.quantity;
+          item.sum = element.sub_total_price;
+          sendData.items.push(item);
+        });
+
+        break;
+      case "ORDER_BASKET": // 장바구니...
+        //console.log(aBasketProductData.product_code + aBasketProductData.product_name + aBasketProductData.product_price + aBasketProductData.product_qty);
+        sendData.items = Array();
+        aBasketProductData.forEach(function (element) {
+          var item = Object();
+          //item.name = element.product_name;
+          item.price = element.product_price;
+          item.no = element.product_no;
+          sendData.items.push(item);
+        });
+        //sendData.items = items;
+        //sendData = aBasketProductData;
+        //console.log(aBasketProductData);
+        break;
+      case "PRODUCT_SEARCH":  // 상품 리스트 페이지...
+        // keyword = document.querySelector("div.searchForm div.search > #keyword").value;
+        // sendData.kwd = keyword;
+        //console.log("keyword = " + keyword);
+        break;
+      case "PRODUCT_DETAIL": //상품 상세 페이지...
+        //console.log(productName + "/" + productNo + "/" + productPrice);
+        sendData.pdName = product_name;
+        sendData.pdNo = iProductNo;
+        sendData.pdPrice = product_price;
+
+        s_params = get_query();
+
+        if(s_params['psr'] !== undefined) sendData.reco_ai = 1;
+        else sendData.reco_ai = 0;        
+        if(s_params['ai_ref'] !== undefined) sendData.ai_ref = s_params['ai_ref'];
+
+        if(s_params['coordi_ai'] !== undefined) sendData.coordi_ai = 1;
+        else sendData.coordi_ai = 0;
+      
+        break;
+      case "PRODUCT_LIST":
+        //console.log("PRODUCT_LIST");
+        break;
+      case "MYSHOP_WISHLIST":
+        //console.log(aWishlistProductData.product_code + "/" + aWishlistProductData.product_name );
+        sendData.items = Array();
+        // console.log(aWishlistProductData);
+        aWishlistProductData.forEach(function (element) {
+          var item = Object();
+          item.name = element.product_name;
+          //item.price = element.product_price;
+          item.no = element.product_no;
+          sendData.items.push(item);
+        });
+        //sendData = aWishlistProductData;
+        break;
+      case "MAIN":
+        // if (location.href.indexOf('ref=piclick') > -1) {
+        //   sendData.ad_click = 1;
+        //   sendData.url = document.location.href;
+        // }
+        // else {
+        //   sendData.ad_click = 0;
+        // }
+        break;
+    }
+    piclick_params.cv_data = sendData;
+  }
+  else {
+    s_params = get_query();
+
+    if(s_params['psr'] !== undefined) {
+      piclick_params.psr = s_params['psr'];
+      piclick_params.reco_ai = 1;
+    }
+    else 
+      piclick_params.reco_ai = 0;        
+    if(s_params['ai_ref'] !== undefined) piclick_params.ai_ref = s_params['ai_ref'];
+
+    if(s_params['coordi_ai'] !== undefined) piclick_params.coordi_ai = 1;
+    else piclick_params.coordi_ai = 0;
+
+    if(s_params['da_ref'] !== undefined) {
+      if(s_params['da_ref'] != '') setCookie("psrtr", "1", 24 * 30 ); 
+    }
+
+    if(s_params['ref'] !== undefined) {
+      if(s_params['ref'] != '') setCookie("psrtr", "1", 24 * 30 ); 
+    }
+
+    if(s_params['gf_ref'] !== undefined) {
+      setCookie("psrtr", "1", 24 * 30 ); 
+    }
+  }
+
+  var postPsrRcv = function () {
+    var getCookie = function(name) {
+      var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+      return value? value[2] : "";
+    };
+
+    if(piclick_params.type == "self") {
+      var userinfo = document.querySelector(".xans-member-var-id");
+      if(userinfo != null) piclick_params.user_id = userinfo.innerText;   
+      
+      var userid = document.querySelector("#crema-login-username");
+      if( userid != null) piclick_params.user_id = userid.innerText;
+      // console.log("piclick username =" + userid);
+    }
+
+    if (location.href.indexOf('ref=piclick') > -1) {
+      if (location.href.indexOf('psr=') > -1) {
+        var url = new URL(location.href);
+        var ui = url.searchParams.get("psr");
+        setCookie("psrui", ui, 24*30);
+      }        
+    }
+
+    var sendRcvLog = function(params) {
+      var fp = getCookie("psrfp");
+      piclick_params.fp = fp;
+      var psrtr = getCookie("psrtr");
+      piclick_params.tr = psrtr;
+      
+      var queryString = $.param(piclick_params);    
+      $.ajax({
+        type: 'GET',       
+        url: 'https://rcv2.piclick.kr/rcv/rcv_log.php?'  + queryString, 
+        dataType: "jsonp", 
+        success:function(resp) { 
+          setCookie("psrui", resp.uid, 24*30);
+          console.log(resp.result);             
+        }
+      });
+    }
+
+    function getFormatDate(date){
+      var year = date.getFullYear();              //yyyy
+      var month = (1 + date.getMonth());          //M
+      month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+      var day = date.getDate();                   //d
+      day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+      return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+    }
+
+    //Check if cookie support...
+    setCookie("support_cookie", 1, 1);
+    var cookiesEnabled = getCookie("support_cookie") ? true : false;
+    piclick_params.support_cookie = cookiesEnabled;
+    psrui = getCookie("psrui");
+    piclick_params.psrui = psrui;
+    
+    // console.log(piclick_params);
+    sendRcvLog(piclick_params);
+    
+    if(piclick_params.mall_id == "grandmood" || piclick_params.mall_id == "micmaclab" || piclick_params.mall_id == "spao" ) {
+      // 네이버 페이 수집
+      if ($(".npay_btn_link.npay_btn_pay").length > 0) {      
+        $(".npay_btn_link.npay_btn_pay, .btnNaverPay").bind("click", function (e) {
+          piclick_params.cv_data.items = Array();
+          piclick_params.pageID = "ORDER_ORDERRESULT";
+          if (piclick_params.device == "p") {          
+            if ($(".option_product").length) {            
+              var order_no = "" + iProductNo;
+              var item = Object();                        
+              item.name = product_name;;
+              item.price = product_price;
+              item.no = iProductNo;
+              item.qty = 0;
+              var pay_amnt = 0;
+
+              $(".option_product").each(function (idx, product) {
+                // console.log(product.children[1].querySelector("span input"));
+                item.qty += parseInt(product.children[1].querySelector("span input").value);            
+              });
+              item.sum = item.price * item.qty;
+              pay_amnt += item.sum;
+
+              piclick_params.cv_data.items.push(item);
+
+              // console.log(item);
+              // alert("NPAY ADDED ITEM");
+
+              // 코디 상품
+              if($('input.temporary-product-select[type="checkbox"]').length) {
+                $('input.temporary-product-select[type="checkbox"]').each(function(idx, product) {                
+                  var item = Object();
+                  var product_info = product.value.split("|");
+                  item.no = product_info[0];
+                  order_no += "_" + item.no;
+                  item.name = product_info[4];
+                  item.price = product_info[5];
+                  item.qty = 1;
+                  item.sum = item.price * item.qty;
+                  pay_amnt += item.sum;
+                  piclick_params.cv_data.items.push(item);
+                }); 
+              } 
+
+              var npayCookie = getCookie("newpay");
+              if (npayCookie == order_no) {
+                // 현재 페이지 쿠키가 존재할경우
+                console.log("npay cookie exist" + order_no);             
+                return;
+              }
+              
+              setCookie("newpay", order_no, 1);
+              
+              var date = new Date();
+              date = getFormatDate(date);
+              order_no = date + "_" + order_no;
+              
+              piclick_params.cv_data.order_id = order_no;
+              piclick_params.cv_data.payed_amount = pay_amnt;
+              piclick_params.cv_data.paytype = "npay";
+
+              // document
+              // .getElementById("piclick-newpay-iframe")
+              // .contentWindow.postMessage(piclick_params, "*");
+              
+              sendRcvLog(piclick_params);          
+            } 
+          } else {
+            // console.log($(".option_product"));
+            
+            if ($(".option_product").length) {
+
+              // alert("mobile option product" + product_name);
+              var order_no = "" + iProductNo;
+              var item = Object();                        
+              item.name = product_name;
+              item.price = product_price;
+              item.no = iProductNo;
+              item.qty = 0;
+              var pay_amnt = 0;
+
+              $(".option_product").each(function (idx, product) {
+                item.qty += parseInt(product.querySelector("p input").value);                  
+              });
+              item.sum = item.price * item.qty;
+              pay_amnt += item.sum;
+
+              piclick_params.cv_data.items.push(item);
+
+              // 코디 상품
+              if($('input.temporary-product-select[type="checkbox"]').length) {
+                $('input.temporary-product-select[type="checkbox"]').each(function(idx, product) {
+                  var item = Object();
+                  var product_info = product.value.split("|");
+                  item.no = product_info[0];
+                  order_no += "_" + item.no;
+                  item.name = product_info[4];
+                  item.price = product_info[5];
+                  item.qty = 1;
+                  item.sum = item.price * item.qty;
+                  pay_amnt += item.sum;
+                  piclick_params.cv_data.items.push(item);
+                }); 
+              } 
+
+              var npayCookie = getCookie("newpay");
+              if (npayCookie == order_no) {
+                // 현재 페이지 쿠키가 존재할경우
+                console.log("npay cookie exist" + order_no);
+                // alert("npay cookie exist" + order_no);
+                return;
+              }  
+              
+              setCookie("newpay", order_no, 1);
+
+              var date = new Date();
+              date = getFormatDate(date);
+              order_no = date + "_" + order_no;
+              
+              piclick_params.cv_data.order_id = order_no;
+              piclick_params.cv_data.payed_amount = pay_amnt;
+              piclick_params.cv_data.paytype = "npay";
+
+              // console.log(piclick_params);
+
+              // document
+              // .getElementById("piclick-newpay-iframe")
+              // .contentWindow.postMessage(piclick_params, "*");            
+              sendRcvLog(piclick_params);            
+            } 
+          }
+        });
+      }
+
+      // 카카오 페이 수집
+      if ($('#kakao-checkout-button > #checkoutContainer > .__checkout_buy_contents > .__checkout_btn_buy').length > 0) {      
+        $('#kakao-checkout-button > #checkoutContainer > .__checkout_buy_contents > .__checkout_btn_buy').bind("click", function (e) {
+          piclick_params.cv_data.items = Array();
+          piclick_params.pageID = "ORDER_ORDERRESULT";
+          if (piclick_params.device == "p") {          
+            if ($(".option_product").length) {            
+              var order_no = "" + iProductNo;
+              var item = Object();                        
+              item.name = product_name;;
+              item.price = product_price;
+              item.no = iProductNo;
+              item.qty = 0;
+              var pay_amnt = 0;
+
+              $(".option_product").each(function (idx, product) {
+                // console.log(product.children[1].querySelector("span input"));
+                item.qty += parseInt(product.children[1].querySelector("span input").value);            
+              });
+              item.sum = item.price * item.qty;
+              pay_amnt += item.sum;
+
+              piclick_params.cv_data.items.push(item);
+
+              // 코디 상품
+              if($('input.temporary-product-select[type="checkbox"]').length) {
+                $('input.temporary-product-select[type="checkbox"]').each(function(idx, product) {                
+                  var item = Object();
+                  var product_info = product.value.split("|");
+                  item.no = product_info[0];
+                  order_no += "_" + item.no;
+                  item.name = product_info[4];
+                  item.price = product_info[5];
+                  item.qty = 1;
+                  item.sum = item.price * item.qty;
+                  pay_amnt += item.sum;
+                  piclick_params.cv_data.items.push(item);
+                }); 
+              } 
+
+              var npayCookie = getCookie("newpay");
+              if (npayCookie == order_no) {
+                // 현재 페이지 쿠키가 존재할경우
+                console.log("npay cookie exist" + order_no);             
+                return;
+              }
+              
+              setCookie("newpay", order_no, 1);
+              
+              var date = new Date();
+              date = getFormatDate(date);
+              order_no = date + "_" + order_no;
+              
+              piclick_params.cv_data.order_id = order_no;
+              piclick_params.cv_data.payed_amount = pay_amnt;
+              piclick_params.cv_data.paytype = "kpay";
+
+              // document
+              // .getElementById("piclick-newpay-iframe")
+              // .contentWindow.postMessage(piclick_params, "*");
+              
+              sendRcvLog(piclick_params);          
+            } 
+          } else {
+            // console.log($(".option_product"));
+            
+            if ($(".option_product").length) {
+
+              // alert("mobile option product" + product_name);
+              var order_no = "" + iProductNo;
+              var item = Object();                        
+              item.name = product_name;
+              item.price = product_price;
+              item.no = iProductNo;
+              item.qty = 0;
+              var pay_amnt = 0;
+
+              $(".option_product").each(function (idx, product) {
+                item.qty += parseInt(product.querySelector("p input").value);                  
+              });
+              item.sum = item.price * item.qty;
+              pay_amnt += item.sum;
+
+              piclick_params.cv_data.items.push(item);
+
+              // 코디 상품
+              if($('input.temporary-product-select[type="checkbox"]').length) {
+                $('input.temporary-product-select[type="checkbox"]').each(function(idx, product) {
+                  var item = Object();
+                  var product_info = product.value.split("|");
+                  item.no = product_info[0];
+                  order_no += "_" + item.no;
+                  item.name = product_info[4];
+                  item.price = product_info[5];
+                  item.qty = 1;
+                  item.sum = item.price * item.qty;
+                  pay_amnt += item.sum;
+                  piclick_params.cv_data.items.push(item);
+                }); 
+              } 
+
+              var npayCookie = getCookie("newpay");
+              if (npayCookie == order_no) {
+                // 현재 페이지 쿠키가 존재할경우
+                console.log("npay cookie exist" + order_no);
+                // alert("npay cookie exist" + order_no);
+                return;
+              }  
+              
+              setCookie("newpay", order_no, 1);
+
+              var date = new Date();
+              date = getFormatDate(date);
+              order_no = date + "_" + order_no;
+              
+              piclick_params.cv_data.order_id = order_no;
+              piclick_params.cv_data.payed_amount = pay_amnt;
+              piclick_params.cv_data.paytype = "npay";
+
+              // console.log(piclick_params);
+
+              // document
+              // .getElementById("piclick-newpay-iframe")
+              // .contentWindow.postMessage(piclick_params, "*");            
+              sendRcvLog(piclick_params);            
+            } 
+          }
+        });
+      }
+
+    }
+
+    function injectScript(path, callback) {
+      var newScript = document.createElement("script");
+      newScript.src = path;
+      newScript.type = "text/javascript";
+      document.body.appendChild(newScript);
+  
+      newScript.onload = callback;
+    }
+  
+    // check finger print id....
+    if(!getCookie("psrfp")) {
+      // polyfill 로딩 후 fingerprintJS 로딩
+      injectScript("https://fingerprint.piclick.kr/polyfill.min.js", function() {
+        injectScript("https://fingerprint.piclick.kr", function() {
+            var fpPromise = FingerprintJS.load();
+            fpPromise
+                .then(function (fp) { return fp.get() })
+                .then(function (result) {
+                  var psrfp = result.visitorId;
+                  // console.log(psrfp);
+                  setCookie("psrfp", psrfp, 24 * 90 ); // 3개월
+                })
+        })
+      })
+    }
+  }
+  return {
+    init: postPsrRcv
+  };
+}());
+piclickRcv.init();

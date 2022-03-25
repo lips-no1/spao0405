@@ -1,0 +1,1180 @@
+/**
+ * Piclick Solution
+ */
+
+// 숫자 -> 통화
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// Production steps of ECMA-262, Edition 6, 22.1.2.1
+if (!Array.from) {
+  Array.from = (function () {
+    var toStr = Object.prototype.toString;
+    var isCallable = function (fn) {
+      return typeof fn === "function" || toStr.call(fn) === "[object Function]";
+    };
+    var toInteger = function (value) {
+      var number = Number(value);
+      if (isNaN(number)) {
+        return 0;
+      }
+      if (number === 0 || !isFinite(number)) {
+        return number;
+      }
+      return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+    };
+    var maxSafeInteger = Math.pow(2, 53) - 1;
+    var toLength = function (value) {
+      var len = toInteger(value);
+      return Math.min(Math.max(len, 0), maxSafeInteger);
+    };
+
+    // The length property of the from method is 1.
+    return function from(arrayLike /*, mapFn, thisArg */) {
+      // 1. Let C be the this value.
+      var C = this;
+
+      // 2. Let items be ToObject(arrayLike).
+      var items = Object(arrayLike);
+
+      // 3. ReturnIfAbrupt(items).
+      if (arrayLike == null) {
+        throw new TypeError(
+          "Array.from requires an array-like object - not null or undefined"
+        );
+      }
+
+      // 4. If mapfn is undefined, then let mapping be false.
+      var mapFn = arguments.length > 1 ? arguments[1] : void undefined;
+      var T;
+      if (typeof mapFn !== "undefined") {
+        // 5. else
+        // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
+        if (!isCallable(mapFn)) {
+          throw new TypeError(
+            "Array.from: when provided, the second argument must be a function"
+          );
+        }
+
+        // 5. b. If thisArg was supplied, let T be thisArg; else let T be undefined.
+        if (arguments.length > 2) {
+          T = arguments[2];
+        }
+      }
+
+      // 10. Let lenValue be Get(items, "length").
+      // 11. Let len be ToLength(lenValue).
+      var len = toLength(items.length);
+
+      // 13. If IsConstructor(C) is true, then
+      // 13. a. Let A be the result of calling the [[Construct]] internal method
+      // of C with an argument list containing the single item len.
+      // 14. a. Else, Let A be ArrayCreate(len).
+      var A = isCallable(C) ? Object(new C(len)) : new Array(len);
+
+      // 16. Let k be 0.
+      var k = 0;
+      // 17. Repeat, while k < len… (also steps a - h)
+      var kValue;
+      while (k < len) {
+        kValue = items[k];
+        if (mapFn) {
+          A[k] =
+            typeof T === "undefined"
+              ? mapFn(kValue, k)
+              : mapFn.call(T, kValue, k);
+        } else {
+          A[k] = kValue;
+        }
+        k += 1;
+      }
+      // 18. Let putStatus be Put(A, "length", len, true).
+      A.length = len;
+      // 20. Return A.
+      return A;
+    };
+  })();
+}
+
+var Piclick = function () {
+  this.initialize.apply(this, arguments);
+};
+
+// 이전 product select 정보
+var lastProductSelect = [];
+
+Piclick.prototype = {
+  initialize: function () {
+    this.sol_version = "v1";
+    this.au_id = "2826";
+    this.siteID = "210";
+    this.sirs_api_url = "https://sol.piclick.kr/similarSearch/";
+    this.static_url = "https://reco.piclick.kr/static/";
+    this.device;
+    this.product_no = iProductNo;
+    this.view = false;
+    this.uid = this.getCookie("psrui"); // 픽클릭 쿠키
+    this.view_mode = "checkbox"; // 코디매니저 view_mode (modal | checkbox)
+
+    // 디바이스 체크
+    var isMobile =
+      /Mobile/i.test(window.navigator.userAgent) ||
+      /m\./.test(window.location.origin);
+
+    if (isMobile) {
+      this.device = "mobile";
+    } else {
+      this.device = "pc";
+    }
+  },
+  createModalIframe: function () {
+    // iframe 컨테이너 생성
+    var iframeContainer = document.createElement("div");
+    // iframe 생성
+    var coordiIframe = document.createElement("iframe");
+    coordiIframe.setAttribute("style", "display: none;");
+    iframeContainer.setAttribute("style", "border: none;");
+
+    // viewMode가 체크박스인지 모달인지에 따라서 iframe 추가
+    if (piclick.view_mode === "checkbox") {
+      if (piclick.device === "pc") {
+        coordiIframe.setAttribute(
+          "src",
+          "https://coordi-front.piclick.kr?site_id=" +
+            piclick.siteID +
+            "&product_id=" +
+            piclick.product_no +
+            "&view_mode=" +
+            piclick.view_mode +
+            "&checkbox_hide_footer=true&direction=vertical&custom-title-value=코디상품&username=spao&hide-won-sign=true&device=pc&enable-dropdown=true&use-discount=true"
+        );
+
+        iframeContainer.classList.add("piclick-checkbox-container");
+        var currentOptionList = document.querySelector("#totalPrice");
+        iframeContainer.classList.add("piclick-checkbox-iframe-container");
+        coordiIframe.classList.add("piclick-checkbox-iframe");
+
+        iframeContainer.appendChild(coordiIframe);
+        $(iframeContainer).insertBefore(currentOptionList);
+      } else {
+        var totalPrice = document.querySelector("#totalPrice");
+        iframeContainer.classList.add(
+          "piclick-checkbox-mobile-iframe-container"
+        );
+
+        coordiIframe.setAttribute(
+          "src",
+          "https://coordi-front.piclick.kr?site_id=" +
+            piclick.siteID +
+            "&product_id=" +
+            piclick.product_no +
+            "&view_mode=" +
+            piclick.view_mode +
+            "&checkbox_hide_footer=true&direction=vertical&custom-title-value=코디상품&username=spao&hide-won-sign=true&device=mobile&enable-dropdown=true&use-discount=true"
+        );
+
+        coordiIframe.classList.add("piclick-checkbox-iframe");
+        iframeContainer.appendChild(coordiIframe);
+        $(iframeContainer).insertBefore(totalPrice);
+      }
+    } else {
+      return;
+    }
+  },
+
+  // 모달 토글
+  // toggleModal: function () {
+  //   var body = document.querySelector("body");
+  //   var mobileModal = document.querySelector("div.piclick-iframe-container");
+  //   var mobileModalBakcground = document.createElement("div");
+  //   mobileModalBakcground.classList.add("piclick-coordi-iframe-background");
+  //   mobileModalBakcground.addEventListener("click", piclick.toggleModal);
+
+  //   piclick.checkViewOnce();
+
+  //   if (piclick.device === "mobile") {
+  //     // var piclickTextElement = document.querySelector(".piclick-text");
+
+  //     var sideCloseButton = document.querySelector(
+  //       ".piclick-mobile-toggle-button"
+  //     );
+  //     if (mobileModal.classList.contains("piclick-coordi-mobile-iframe-hide")) {
+  //       mobileModal.classList.remove("piclick-coordi-mobile-iframe-hide");
+  //       body.appendChild(mobileModalBakcground);
+
+  //       sideCloseButton.classList.add("piclick-modal-on");
+  //       sideCloseButton.classList.remove("piclick-modal-off");
+
+  //       document.querySelector("body").style.overflow = "hidden";
+
+  //       // piclickTextElement.classList.add("piclick-text-on");
+  //       // piclickTextElement.classList.remove("piclick-text-off");
+  //     } else {
+  //       var createdMobileModalBackground = document.querySelector(
+  //         ".piclick-coordi-iframe-background"
+  //       );
+  //       mobileModal.classList.add("piclick-coordi-mobile-iframe-hide");
+  //       $(createdMobileModalBackground).remove();
+
+  //       if (/iPhone/.test(window.navigator.userAgent)) {
+  //         sideCloseButton.setAttribute("style", "right: 12px");
+  //         sideCloseButton.classList.add("piclick-modal-off");
+  //         sideCloseButton.classList.remove("piclick-modal-on");
+  //       } else {
+  //         sideCloseButton.classList.add("piclick-modal-off");
+  //         sideCloseButton.classList.remove("piclick-modal-on");
+  //       }
+  //       document.querySelector("body").style.overflow = "visible";
+  //     }
+  //   }
+  // },
+
+  getCookie: function (name) {
+    var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+    return value ? value[2] : null;
+  },
+
+  checkViewOnce: function () {
+    if (!this.view) {
+      this.view = true;
+      // View count 적재
+      $.ajax({
+        url:
+          "https://coordi.piclick.kr/stat/shop/" +
+          piclick.siteID +
+          "/product/" +
+          piclick.product_no,
+        type: "POST",
+        success: function (data) {
+          // console.log(data)
+        },
+      });
+    }
+  },
+
+  actionLogging: function (submitType, device) {
+    // submitType: "buy_now" | "add_bakset"
+    // 매칭된 상품 선택정보
+    var temporaryProductSelect = document.querySelectorAll(
+      ".temporary-product-select[name='basket_info[]']"
+    );
+
+    var resultForm = Array.from(temporaryProductSelect).map(function (product) {
+      // 상품 정보가 담긴 배열
+      var productInfoArray = product.value.split("|");
+      var productID = productInfoArray[0];
+      var price = productInfoArray[5];
+
+      var optionElement = document.querySelectorAll(
+        'select[name="option_' + productID + '[]"]'
+      );
+      var options = Array.from(optionElement).map(function (option) {
+        return option.value;
+      });
+
+      return {
+        product_no: productID,
+        price: parseInt(price),
+        selected_options: options,
+      };
+    });
+
+    // 매칭 대상 상품 정보
+    var matchTargetElement = document.querySelectorAll(".option_product");
+    var matchTargetForm = Array.from(matchTargetElement)
+      .map(function (product) {
+        if (product.hasAttribute("target-key")) {
+          // 상품  id
+          var productID = product.getAttribute("target-key");
+          var dataOptionIndex = product.getAttribute("data-option-index");
+          // 가격
+          var price = product
+            .querySelector("#option_box" + dataOptionIndex + "_price")
+            .querySelector("input").value;
+          // 옵션
+          var options = product
+            .querySelector(".product")
+            .querySelector("span")
+            .innerText.split("/");
+
+          return {
+            product_no: productID,
+            price: parseInt(price),
+            selected_options: options,
+          };
+        }
+      })
+      .filter(function (item) {
+        return item;
+      });
+
+    var actionForm = {
+      cookieID: piclick.uid,
+      submit_type: submitType,
+      result: resultForm || [],
+      matchTargetResult: matchTargetForm || [],
+    };
+
+    // PC의 경우 코디상품을 선택하지 않았다면, 일반 구매임
+    $.ajax({
+      url:
+        "https://coordi.piclick.kr/stat/shop/" +
+        piclick.siteID +
+        "/product/" +
+        piclick.product_no +
+        "/action",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(actionForm),
+      success: function (data) {
+        // console.log(data);
+      },
+    });
+  },
+
+  handlePostMessage: function (event) {
+    var origin = event.origin; // postmessage origin
+    var msg = event.data; // postmessage 내용
+
+    // origin이 piclick coordi인지 검증
+    // if (origin === "https://coordi-front.piclick.kr") {
+    // 모달 닫기 이벤트
+    if (msg === "close-modal") {
+      piclick.toggleModal();
+    }
+
+    // 모달 전용 Submit
+    if (msg.messageType === "submit_modal") {
+      piclick.createBasketInfo(msg);
+      // 모달 닫기
+      piclick.toggleModal();
+      piclick.submitModalProduct(msg);
+    }
+
+    // Checkbox 전용 submit
+    if (msg.messageType === "submit_checkbox") {
+      piclick.submitCheckboxProduct(msg);
+    }
+
+    // 상품 Alert확인
+    if (msg.messageType === "alert") {
+      alert(msg.message);
+    }
+
+    // 상품의 결과 있을 경우 모바일 페이지에서 버튼 생성
+    if (msg === "piclick_coordi_valid") {
+      function onVisible(element, callback) {
+        if (typeof IntersectionObserver === "function") {
+          new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+              if (entry.intersectionRatio > 0) {
+                callback(element);
+                observer.disconnect();
+              }
+            });
+          }).observe(element);
+        } else {
+          piclick.isIframeView();
+        }
+      }
+
+      if (piclick.device === "pc") {
+        var iframeContainer = document.querySelector(
+          ".piclick-checkbox-container"
+        );
+
+        onVisible(iframeContainer, piclick.isIframeView);
+      } else {
+        var iframeContainer = document.querySelector(
+          ".piclick-checkbox-mobile-iframe-container"
+        );
+
+        onVisible(iframeContainer, piclick.isIframeView);
+      }
+    }
+
+    // 상품의 결과가 없을 때 Piclick iframe관련 Element모두 삭제
+    if (msg === "piclick_coordi_no_data") {
+      var mobileIframeContainer = $(
+        ".piclick-checkbox-mobile-iframe-container"
+      );
+      var pcIframeContainer = $(".piclick-checkbox-iframe-container");
+
+      $(mobileIframeContainer).remove();
+      $(pcIframeContainer).remove();
+    }
+
+    // PC에서 접속 시 iframe의 높이 갱신
+    if (msg.messageType === "set_iframe_height") {
+      var pcIframeContainer = document.querySelector(
+        ".piclick-checkbox-iframe-container"
+      );
+      var mobileIframeContainer = document.querySelector(
+        ".piclick-checkbox-mobile-iframe-container"
+      );
+      var piclickIframe = document.querySelector(".piclick-checkbox-iframe");
+
+      var childHeight = msg.height;
+      piclickIframe.removeAttribute("style");
+
+      if (pcIframeContainer) {
+        pcIframeContainer.removeAttribute("style");
+        pcIframeContainer.style.height = childHeight + "px";
+      } else if (mobileIframeContainer) {
+        mobileIframeContainer.removeAttribute("style");
+        mobileIframeContainer.style.height = childHeight + "px";
+      }
+    }
+
+    // 보기모드가 checkbox 일 때의 submit postmessage 제어
+    if (msg.messageType === "product_submit_checkbox") {
+      piclick.createBasketInfo(msg);
+    }
+    // }
+  },
+  // 상품 장바구니 form 전송 - 체크박스 모바일 전용 장바구니 폼 전송
+  submitCheckboxProduct: function (msg) {
+    // 사용자 액션 로깅
+    piclick.actionLogging(msg.submit_type);
+    var currentProductList = document.querySelectorAll(".option_product ");
+    var openFixedOptionBtn = document.querySelector(".btnOpenFixedOption");
+
+    if (currentProductList.length > 0 || !openFixedOptionBtn) {
+      var buyNowBtn = document.querySelector(
+        'a[onclick="product_submit(1, ' +
+          "/exec/front/order/basket/" +
+          ', this)"], button[onclick="product_submit(1, ' +
+          "/exec/front/order/basket/" +
+          ', this)"]'
+      );
+      var addBasketBtn = document.querySelector(
+        'a[onclick="product_submit(2, ' +
+          "/exec/front/order/basket/" +
+          ', this)"], button[onclick="product_submit(2, ' +
+          "/exec/front/order/basket/" +
+          ', this)"]'
+      );
+
+      if (msg.submit_type === "buy_now") {
+        buyNowBtn.dispatchEvent(new Event("click"));
+      } else if (msg.submit_type === "add_basket") {
+        addBasketBtn.dispatchEvent(new Event("click"));
+      }
+    } else {
+      if (
+        confirm(
+          "본상품의 옵션이 선택되지 않았습니다.\n 선택한 상품만 장바구니에 담으시겠습니까?"
+        )
+      ) {
+        if (msg.submit_type === "buy_now") {
+          buyNowBtn.dispatchEvent(new Event("click"));
+        } else if (msg.submit_type === "add_basket") {
+          addBasketBtn.dispatchEvent(new Event("click"));
+        }
+      } else {
+        if (openFixedOptionBtn) {
+          openFixedOptionBtn.dispatchEvent(new Event("click"));
+        }
+      }
+    }
+  },
+  // 상품 장바구니 form 전송 - 모달 모바일 전용 장바구니 폼 전송
+  submitModalProduct: function (msg) {
+    // 사용자 액션 로깅
+    piclick.actionLogging(msg.submit_type);
+
+    if (msg.submit_type === "buy_now") {
+      product_submit(1, "/exec/front/order/basket/", this);
+    } else if (msg.submit_type === "add_basket") {
+      product_submit(2, "/exec/front/order/basket/", this);
+    }
+  },
+  createBasketInfo: function (msg) {
+    // 같이 매칭된 상품에 대한 옵션 제어
+    if (msg.result.length > 0) {
+      var optionTable = $(".option_products");
+
+      if (optionTable.length < 1) {
+        var totalProductsTable = $("#totalProducts > table");
+        var newOptionTable = $("<tbody>", {
+          class: "option_products",
+        });
+
+        totalProductsTable.append(newOptionTable);
+        optionTable = $(".option_products");
+      }
+
+      // 아이템의 길이 상관 없이 값 지정.
+      lastProductSelect = msg.result;
+
+      // 삭제 대상을 판별하기 위한 basket_info DOM
+      var previousTemporaryProducts = document.querySelectorAll(
+        "input.temporary-product-select[type='checkbox']"
+      );
+
+      // 삭제대상
+      var removeTargetProducts = Array.from(previousTemporaryProducts).filter(
+        function (element, index) {
+          return !msg.result.some(function (item) {
+            return (
+              item.product.product_no ===
+              parseInt(element.getAttribute("product_no"), 10)
+            );
+          });
+        }
+      );
+
+      removeTargetProducts.forEach(function (element) {
+        var temporaryElements = document.querySelectorAll(
+          '.temporary-product-select[product_no="' +
+            element.getAttribute("product_no") +
+            '"]'
+        );
+
+        temporaryElements.forEach(function (tempElement) {
+          $(tempElement).remove();
+        });
+      });
+
+      $.each(msg.result, function (index, item) {
+        var temporaryProductSelect = document.querySelectorAll(
+          'select.temporary-product-select[product_no="' +
+            item.product.product_no +
+            '"]'
+        );
+
+        const isDifferentPreviosOptions = item.selected_options.some(function (
+          option,
+          index
+        ) {
+          if (temporaryProductSelect[index]) {
+            return temporaryProductSelect[index].value !== option.value;
+          } else {
+            return true;
+          }
+        });
+
+        // 모두 선택 됐을 때만 append..
+        if (
+          item.selected_options.every(function (option) {
+            return option.value !== "*" && option.value !== "**";
+          })
+        ) {
+          if (isDifferentPreviosOptions) {
+            // 임시 옵션 삭제
+            var temporaryProductElements = document.querySelectorAll(
+              '.temporary-product-select[product_no="' +
+                item.product.product_no +
+                '"]'
+            );
+            temporaryProductElements.forEach(function (element) {
+              $(element).remove();
+            });
+
+            //옵션 정보를 담을 테이블 요소 변수 //
+            // 기존 옵션 리스트의 마지막 index
+            var listLastIndex =
+              document.querySelectorAll(".option_product").length + index + 1;
+            // tr
+            var optionProductTr = document.createElement("tr");
+            optionProductTr.classList.add("option_product");
+            optionProductTr.classList.add("temporary-product-select");
+            optionProductTr.setAttribute("product_no", item.product.product_no);
+            optionProductTr.setAttribute("data-option-index", listLastIndex);
+            // td 좌측
+            var leftTd = document.createElement("td");
+            // td 중앙
+            var centerTd = document.createElement("td");
+            if (piclick.device === "mobile") {
+              centerTd.classList.add("center");
+            }
+            // td 우측
+            var rightTd = document.createElement("td");
+            rightTd.classList.add("right");
+
+            // 옵션 지정
+            var productNo = item.product.product_no; // 상품번호
+            // 카테고리 넘버
+            // display group
+            var minQuantity = item.product.minimum_quantity; // 최소수량
+            var maxQuantity = item.product.maximum_quantity; // 최대수량
+            var productName = encodeURI(item.product.product_name); // 상품 이름
+            var productPrice = item.product.price; // 상품 가격
+            var optionType = item.options.option_type || "T"; // 옵션 Type
+            // F/T - 확실X
+            var useAdditionalOption = item.options.use_additional_option; // 추가 옵션 사용여부
+            // var priceContent = item.options.priceContent || "F"; // priceContent
+            var productCode = item.product.product_code;
+            var itemCode = item.variants[0].variant_code; // variant code - 상품 옵션이 없을 경우 variant code로 구분
+            var parsedVariantInfo; // 빈 variantInfo 정보 (옵션 파싱 후 정보 불러옴..)
+
+            // basket_info
+            var basketInfo =
+              productNo +
+              "|" +
+              1 +
+              "|" +
+              1 +
+              "|" +
+              minQuantity +
+              "|" +
+              productName +
+              "|" +
+              productPrice +
+              "|" +
+              optionType +
+              "|" +
+              "F" +
+              "|" +
+              useAdditionalOption +
+              "|" +
+              "F";
+
+            // 선택정보
+            var basketInfoCheckbox = $("<input>", {
+              type: "checkbox",
+              value: basketInfo,
+              checked: "checked",
+              name: "basket_info[]",
+              style: "display: none;",
+              class: "temporary-product-select",
+              product_no: productNo,
+            });
+            var productTitle = $("<p>", {
+              class: "product",
+            });
+            var optionInfo = item.selected_options
+              .map(function (element) {
+                return element.value;
+              })
+              .join("/");
+            if (piclick.device === "pc") {
+              productTitle.html(
+                item.product.product_name +
+                  "<br />" +
+                  "-" +
+                  "<span>" +
+                  optionInfo +
+                  "</span>"
+              );
+            } else if (piclick.device === "mobile") {
+              productTitle.html(
+                "<strong>" +
+                  item.product.product_name +
+                  "</strong>" +
+                  "<br />" +
+                  "-" +
+                  "<span>" +
+                  optionInfo +
+                  "</span>"
+              );
+            }
+
+            $(leftTd).append(basketInfoCheckbox);
+            $(leftTd).append(productTitle);
+
+            // 옵션
+            $.each(item.selected_options, function (optIndex, option) {
+              parsedVariantInfo = item.variants.filter(function (variant) {
+                if (
+                  JSON.stringify(variant.options) ===
+                  JSON.stringify(item.selected_options)
+                ) {
+                  return variant;
+                }
+              })[0];
+
+              var selectElement = $("<select>", {
+                name: "option_" + productNo + "[]",
+                id: "option_" + productNo + "_" + optIndex,
+                product_no: productNo,
+                required: true,
+                value: option.value,
+                style: "display: none;",
+                class: "temporary-product-select",
+              });
+
+              var optionElement = $("<option>", {
+                value: option.value,
+              });
+
+              selectElement.append(optionElement);
+              $(leftTd).append(selectElement);
+            });
+
+            var quantityElement;
+            // 수량정보
+            if (parsedVariantInfo) {
+              quantityElement = $("<input>", {
+                id: "quantity_" + productNo,
+                name: "quantity_opt[]",
+                product_no: productNo,
+                product_code: productCode,
+                option_type: optionType,
+                product_min: minQuantity,
+                product_max: maxQuantity,
+                value: 1,
+                buy_unit: 1,
+                class:
+                  "temporary-product-select quantity_opt eProductQuantityClass",
+                item_code: parsedVariantInfo.variant_code,
+                type: piclick.device === "mobile" ? "number" : "",
+              });
+            } else {
+              quantityElement = $("<input>", {
+                id: "quantity_" + productNo,
+                name: "quantity_opt[]",
+                product_no: productNo,
+                product_code: productCode,
+                option_type: optionType,
+                product_min: minQuantity,
+                product_max: maxQuantity,
+                value: 1,
+                buy_unit: 1,
+                class:
+                  "temporary-product-select quantity_opt eProductQuantityClass",
+                item_code: itemCode,
+                type: piclick.device === "mobile" ? "number" : "",
+              });
+            }
+
+            var quantityUp = $("<a>", {
+              href: "#none",
+              class: "piclick-item-up",
+            });
+
+            var quantityDown = $("<a>", {
+              href: "#none",
+              class: "piclick-item-down",
+            });
+
+            // 수량 증가
+            $(quantityUp).click(function () {
+              var quantity = $("input#quantity_" + item.product.product_no);
+              var priceDisplay = $(
+                '.ec-front-product-item-price[product-no="' +
+                  item.product.product_no +
+                  '"]'
+              );
+              var priceInput = $(
+                '.option_box_price[product-no="' +
+                  item.product.product_no +
+                  '"]'
+              );
+              if (item.product.maximum_quantity >= quantity.val()) {
+                alert(
+                  "최대 주문수량은 " +
+                    item.product.minimum_quantity +
+                    "개 입니다."
+                );
+                return;
+              }
+
+              quantity.val(parseInt(quantity.val(), 10) + 1);
+              priceDisplay.text(
+                (
+                  item.product.price * parseInt(quantity.val(), 10)
+                ).toLocaleString()
+              );
+              priceInput.val(item.product.price * parseInt(quantity.val(), 10));
+              setTotalData();
+            });
+
+            // 수량 감소
+            $(quantityDown).click(function () {
+              var quantity = $("input#quantity_" + item.product.product_no);
+              var priceDisplay = $(
+                '.ec-front-product-item-price[product-no="' +
+                  item.product.product_no +
+                  '"]'
+              );
+              var priceInput = $(
+                '.option_box_price[product-no="' +
+                  item.product.product_no +
+                  '"]'
+              );
+              if (item.product.minimum_quantity >= quantity.val()) {
+                alert(
+                  "최소 주문수량은 " +
+                    item.product.minimum_quantity +
+                    "개 입니다."
+                );
+                return;
+              }
+
+              quantity.val(parseInt(quantity.val(), 10) - 1);
+              priceDisplay.text(
+                (
+                  item.product.price * parseInt(quantity.val(), 10)
+                ).toLocaleString()
+              );
+              priceInput.val(item.product.price * parseInt(quantity.val(), 10));
+              setTotalData();
+            });
+
+            // 삭제 버튼
+            var deleteButton = $("<a>", {
+              href: "#none",
+              class: "delete",
+            });
+            var deleteImage = $("<img>", {
+              src: "//img.echosting.cafe24.com/design/skin/default/product/btn_price_delete.gif",
+              alt: "삭제",
+              id: "option_box" + listLastIndex + "_del",
+              class: "option_box_del",
+            });
+            deleteButton.click(function () {
+              var childIframe = document.querySelector(
+                "iframe.piclick-checkbox-iframe"
+              );
+
+              childIframe.contentWindow.postMessage(
+                { action: "uncheck", productNo: productNo },
+                "*"
+              );
+            });
+            deleteButton.append(deleteImage);
+
+            if (piclick.device === "pc") {
+              var quantityContainer = $("<span>", {
+                class: "quantity",
+                style: "width:65px;",
+              });
+
+              $(quantityContainer).append(quantityElement);
+              $(quantityContainer).append(quantityUp);
+              $(quantityContainer).append(quantityDown);
+              $(centerTd).append(deleteButton);
+              $(centerTd).append(quantityContainer);
+            } else if (piclick.device === "mobile") {
+              var quantityContainer = $("<p>");
+              $(centerTd).append(deleteButton);
+              $(quantityContainer).append(quantityElement);
+              $(quantityContainer).append(quantityUp);
+              $(quantityContainer).append(quantityDown);
+              $(leftTd).append(quantityContainer);
+            }
+
+            // 가격
+            var priceContainer = $(
+              piclick.device === "pc" ? "<span>" : "<strong>",
+              {
+                id: "option_box" + listLastIndex + "_price",
+                class: piclick.device === "mobile" ? "price" : "",
+              }
+            );
+            var price = $("<input>", {
+              type: "hidden",
+              class: "option_box_price",
+              value: parseInt(item.product.price),
+              "product-no": item.product.product_no,
+            });
+            var priceSpan = $("<span>", {
+              class: "ec-front-product-item-price",
+              "product-no": item.product.product_no,
+            });
+
+            priceSpan.text(parseInt(item.product.price).toLocaleString());
+            $(priceContainer).append(price);
+            $(priceContainer).append(priceSpan);
+            $(rightTd).append(priceContainer);
+
+            if (piclick.device === "pc") {
+              $(optionProductTr).append(leftTd);
+              $(optionProductTr).append(centerTd);
+              $(optionProductTr).append(rightTd);
+            } else {
+              $(optionProductTr).append(leftTd);
+              $(optionProductTr).append(rightTd);
+              $(optionProductTr).append(centerTd);
+            }
+
+            optionTable.append(optionProductTr);
+            setTotalData();
+          }
+        } else {
+          var temporaryProductElements = document.querySelectorAll(
+            '.temporary-product-select[product_no="' +
+              item.product.product_no +
+              '"]'
+          );
+          temporaryProductElements.forEach(function (element) {
+            $(element).remove();
+          });
+          setTotalData();
+        }
+      });
+    } else {
+      var temporaryProductElements = document.querySelectorAll(
+        ".temporary-product-select"
+      );
+      temporaryProductElements.forEach(function (element) {
+        $(element).remove();
+      });
+      setTotalData();
+    }
+  },
+  // 모달 전용 버튼 (모바일)
+  // createToggleButtonOnMobile: function () {
+  //   var body = document.querySelector("body"); // 픽클릭 모달 컨테이너
+  //   var closeBtn = document.createElement("div"); // 버튼 element
+  //   // 버튼 element에 클래스와 이벤트 추가
+  //   closeBtn.classList.add("piclick-mobile-toggle-button");
+  //   if (/iPhone/.test(window.navigator.userAgent)) {
+  //     closeBtn.setAttribute("style", "right: 12px");
+  //   } else {
+  //     closeBtn.classList.add("piclick-modal-off");
+  //   }
+  //   closeBtn.addEventListener("click", piclick.toggleModal);
+  //   // 텍스트 추가
+  //   var title = document.createElement("p");
+  //   title.textContent = "코디매니저";
+  //   title.classList.add("piclick-mobile-toggle-button-title");
+  //   closeBtn.appendChild(title);
+
+  //   body.appendChild(closeBtn);
+  // },
+
+  // 실제 노출확인 스크롤 이벤트
+  isIframeView: function () {
+    var deviceParam = piclick.device === "pc" ? "P" : "M";
+    var isModal =
+      /layer\_option/gi.test(window.location.href) === true ? "T" : "F";
+    $.ajax({
+      type: "POST",
+      url:
+        "https://coordi.piclick.kr/stat/shop/" +
+        piclick.siteID +
+        "/product/" +
+        piclick.product_no +
+        "?device=" +
+        deviceParam +
+        "&is-modal=" +
+        isModal,
+      processData: false,
+      contentType: false,
+      cache: true,
+      crossDomain: true,
+      timeout: 5000,
+      success: function () {},
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  },
+
+  //   checkThirdPartyPayments: function () {
+  //     var naverPayElement = document.querySelector(
+  //       ".btnNaverPay, #NaverChk_Button"
+  //     );
+  //     var kakaoPayElement = document.querySelector("#kakao-checkout-button");
+
+  //     var paymentStatus = {
+  //       naverPay: naverPayElement ? true : false,
+  //       kakaoPay: kakaoPayElement ? true : false,
+  //     };
+
+  //     console.log(paymentStatus);
+  //   },
+  parseRelationProductList: function () {
+    if (piclick.product_no && pageID === "PRODUCT_DETAIL") {
+      $.ajax({
+        url:
+          "https://coordi.piclick.kr/shop/" +
+          piclick.siteID +
+          "/product/" +
+          piclick.product_no +
+          "/relational_product",
+        type: "get",
+        success: function (json) {
+          var result = json;
+          if (result) {
+            relation_product = result;
+          }
+        },
+      });
+    }
+  },
+};
+
+// 스크립트 자동 실행
+var site_name = "spao";
+var solution_type = 1; // 1: cafe24, 2: makeshop, 3: else
+var pageID = document.querySelector('meta[name="path_role"]').content;
+let unique = +new Date();
+
+// $.ajax({
+//   url: "https://cl2.piclick.kr/v1/util/get_ip.php",
+//   type: "get",
+//   success: function (json) {
+//     var ip = json.ip;
+//     if (ip === "1.214.196.202" || ip === "221.148.226.238") {
+// pageID가 PRODUCT_DETAIL && 현재 접속한 페이지가 detail.html인지 확인
+if (pageID === "PRODUCT_DETAIL") {
+  var piclick = new Piclick();
+  // CSS 추가 //
+  var styleSheet = document.createElement("link");
+  styleSheet.setAttribute("rel", "stylesheet");
+  styleSheet.setAttribute("type", "text/css");
+  styleSheet.setAttribute(
+    "href",
+    piclick.static_url + "product/css/" + site_name + ".css?" + unique++
+  );
+  document.getElementsByTagName("head")[0].appendChild(styleSheet);
+
+  if (piclick.device === "mobile") {
+    // CSS 추가 //
+    var mobileStyleSheet = document.createElement("link");
+    mobileStyleSheet.setAttribute("rel", "stylesheet");
+    mobileStyleSheet.setAttribute("type", "text/css");
+    mobileStyleSheet.setAttribute(
+      "href",
+      piclick.static_url +
+        "product/css/" +
+        site_name +
+        "-mobile.css?" +
+        unique++
+    );
+    document.getElementsByTagName("head")[0].appendChild(mobileStyleSheet);
+  }
+
+  // 모달 생성 //
+  piclick.createModalIframe();
+
+  // postMessage //
+  window.addEventListener("message", piclick.handlePostMessage, false);
+
+  // // 스크롤 실제 노출값 이벤트 추가
+  // window.addEventListener("scroll", piclick.isIframeView);
+
+  // // 다른 페이 서비스 확인
+  // piclick.checkThirdPartyPayments();
+
+  piclick.parseRelationProductList();
+
+  // 버튼 이벤트 추가
+  var target = document.querySelector("body");
+  var observer = new MutationObserver(function () {
+    if (piclick.device === "pc") {
+      var actionButtons = document.querySelectorAll("a, button");
+
+      actionButtons.forEach(function (button) {
+        var buttonClickAttribute = button.getAttribute("onclick");
+
+        if (
+          buttonClickAttribute ===
+          "product_submit(1, '/exec/front/order/basket/', this)"
+        ) {
+          button.onclick = null;
+          button.addEventListener("click", function () {
+            // 기존 상품 선택 확인용 DOM
+            var originalProducts = $(".option_product[target-key]");
+            // 매칭된 상품의 옵션 미선택 확인
+            var isAllOptionsNotChecked = lastProductSelect.some(function (
+              item
+            ) {
+              return item.selected_options.some(function (itemOption) {
+                return itemOption.value === "*" || itemOption.value === "**";
+              });
+            });
+
+            // 선택된 코디된 상품의 옵션 선택 여부와 lastProductSelect의 배열 길이 확인 후 코디 컨펌
+            if (isAllOptionsNotChecked && lastProductSelect.length > 0) {
+              if (originalProducts.length > 0) {
+                if (
+                  window.confirm(
+                    "선택된 코디 상품 중 일부의 필수 옵션이 선택되지 않았습니다.\n그래도 장바구니에 추가하시겠습니까?"
+                  )
+                ) {
+                  product_submit(1, "/exec/front/order/basket/", this);
+                  piclick.actionLogging("buy_now", piclick.device);
+                }
+              } else {
+                alert("필수 옵션을 선택해주세요.");
+              }
+            } else {
+              product_submit(1, "/exec/front/order/basket/", this);
+              piclick.actionLogging("buy_now", piclick.device);
+            }
+          });
+        } else if (
+          buttonClickAttribute ===
+          "product_submit(2, '/exec/front/order/basket/', this)"
+        ) {
+          button.onclick = null;
+          button.addEventListener("click", function () {
+            // 기존 상품 선택 확인용 DOM
+            var originalProducts = $(".option_product[target-key]");
+            // 매칭된 상품의 옵션 미선택 확인
+            var isAllOptionsNotChecked = lastProductSelect.some(function (
+              item
+            ) {
+              return item.selected_options.some(function (itemOption) {
+                return itemOption.value === "*" || itemOption.value === "**";
+              });
+            });
+
+            // 선택된 코디된 상품의 옵션 선택 여부와 lastProductSelect의 배열 길이 확인 후 코디 컨펌
+            if (isAllOptionsNotChecked && lastProductSelect.length > 0) {
+              if (originalProducts.length > 0) {
+                if (
+                  window.confirm(
+                    "선택된 코디 상품 중 일부의 필수 옵션이 선택되지 않았습니다.\n그래도 장바구니에 추가하시겠습니까?"
+                  )
+                ) {
+                  product_submit(2, "/exec/front/order/basket/", this);
+                  piclick.actionLogging("add_bakset", piclick.device);
+                }
+              } else {
+                alert("필수 옵션을 선택해주세요.");
+              }
+            } else {
+              product_submit(2, "/exec/front/order/basket/", this);
+              piclick.actionLogging("add_bakset", piclick.device);
+            }
+          });
+        }
+      });
+
+      observer.disconnect();
+    } else if (piclick.device === "mobile") {
+      var buttonArea = document.querySelector(
+        ".xans-element-.xans-product.xans-product-action.productAction"
+      );
+
+      if (buttonArea) {
+        var actionButtons = document.querySelectorAll("a, button");
+
+        actionButtons.forEach(function (button) {
+          var buttonClickAttribute = button.getAttribute("onclick");
+
+          if (
+            buttonClickAttribute ===
+            "product_submit(1, '/exec/front/order/basket/', this)"
+          ) {
+            piclick.actionLogging("buy_now", piclick.device);
+          } else if (
+            buttonClickAttribute ===
+            "product_submit(2, '/exec/front/order/basket/', this)"
+          ) {
+            piclick.actionLogging("add_bakset", piclick.device);
+          }
+        });
+
+        observer.disconnect();
+      }
+    }
+  });
+
+  var mutationConfig = {
+    attributes: false,
+    childList: true,
+    characterData: false,
+  };
+
+  observer.observe(target, mutationConfig);
+}
+//     }
+//   },
+// });
