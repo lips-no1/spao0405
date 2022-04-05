@@ -1,23 +1,1255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 <!-- 제이쿼리자리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- 외부 js 라이브러리(슬릭) // 웹폰트 //폰트어썸 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- 내가만든css/js -->
 <link rel="stylesheet" href="./css/style.css">
 <script src="./js/script.js"></script>
 
 
-
 </head>
+
 <body>
+  
+<div class="top-bar-wrap row">
+  <div class="top-bar con">
+    <div class="left cell row">
+      <div class="logo-box cell rel-box">
+        <div class="logo ab-cen">                 
+          <img src="./img/png/top_logo_pc.png" alt="">
+        </div>
+      </div>
+      <ul class="row cell menu">
+        <li class="cell bold-txt"><a href="#">wind breaker</a></li>
+        <li class="cell"><a href="#">best</a></li>
+        <li class="cell"><a href="#">women</a></li>
+        <li class="cell"><a href="#">men</a></li>
+        <li class="cell"><a href="#">collaboration</a></li>
+        <li class="cell"><a href="#">kids</a></li>
+        <li class="cell"><a href="#">community</a></li>
+      </ul>
+    </div>
+    <div class="right cell-r">
+      <div class="icon-wrap w100-box row">
+        <div class="icon w25-box cell">    
+          <img src="./img/png/top_mypage.png" alt="">        
+        </div>
+        <div class="icon w25-box cell">
+          <img src="./img/top_search.png" alt="">
+        </div>
+        <div class="icon w25-box cell">
+          <img src="./img/png/top_wish.png" alt="">
+        </div>
+        <div class="icon w25-box cell cart">
+          <img src="./img/png/top_cart_pc.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-2-depth-wrap">
+  <div></div>
+  <div></div>
+  <div class="nav-2-big-depth">
+  <div class="nav-2-depth w100-box row con">
+    <div class="left w50-box cell row">
+      <div class="section1 w25-box cell">
+        <ul>
+          <li><a href="#">new</a></li>
+          <li><a href="#">best</a></li>
+          <li><a href="#">all</a></li>
+        </ul>
+      </div>
+      <div class="section2 w50-box cell">
+        <ul class="gray-txt">
+          <li><a href="#">아우터</a></li>
+          <li><a href="#">상의</a></li>
+          <li><a href="#">하의</a></li>
+          <li><a href="#">스커트</a></li>
+          <li><a href="#">원피스</a></li>
+          <li><a href="#">ACC</a></li>
+          <li><a href="#">이너웨어</a></li>
+          <li><a href="#">홈웨어/잠옷</a></li>
+          <li><a href="#">기타</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="right w50-box cell">
+      <div class="w100-box row">
+        
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/women/1.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/women/2.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell">
+         <div class="h148-box background" style="background-image:url(./img/menu/women/3.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>  
+  <div class="nav-2-big-depth">
+  <div class="nav-2-depth w100-box row con">
+    <div class="left w50-box cell row">
+      <div class="section1 w25-box cell">
+        <ul>
+          <li><a href="#">new</a></li>
+          <li><a href="#">best</a></li>
+          <li><a href="#">all</a></li>
+        </ul>
+      </div>
+      <div class="section2 w50-box cell">
+        <ul class="gray-txt">
+          <li><a href="#">아우터</a></li>
+          <li><a href="#">상의</a></li>
+          <li><a href="#">하의</a></li>
+          <li><a href="#">ACC</a></li>
+          <li><a href="#">이너웨어</a></li>
+          <li><a href="#">홈웨어/잠옷</a></li>
+          <li><a href="#">기타</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="right w50-box cell">
+      <div class="w100-box row">
+        
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/men/1.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/men/2.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell">
+         <div class="h148-box background" style="background-image:url(./img/menu/men/3.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>  
+  <div class="nav-2-big-depth">
+  <div class="nav-2-depth w100-box row con">
+    <div class="left w50-box cell row">
+      <div class="section1 w25-box cell">
+        <ul>
+          <li><a href="#">new</a></li>
+          <li><a href="#">best</a></li>
+          <li><a href="#">all</a></li>
+        </ul>
+      </div>
+      <div class="section2 w50-box cell">
+        <ul class="gray-txt">
+          <li><a href="#">잠옷</a></li>
+          <li><a href="#">상의</a></li>
+          <li><a href="#">잡화</a></li>
+          <li><a href="#">팬시/뷰티</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="right w50-box cell">
+      <div class="w100-box row">
+        
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/collabo/1.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/collabo/2.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell">
+         <div class="h148-box background" style="background-image:url(./img/menu/collabo/3.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>  
+  <div class="nav-2-big-depth">
+  <div class="nav-2-depth w100-box row con kids">
+    <div class="left w50-box cell row">
+      <div class="section1 w25-box cell">
+        <ul>
+          <li><a href="#">new</a></li>
+          <li><a href="#">best</a></li>
+          <li><a href="#">all</a></li>
+        </ul>
+      </div>
+      <div class="section2 cell row">
+        <ul class="cell gray-txt">
+          <li><a href="#">GIRLS</a></li>
+          <li><a href="#">아우터</a></li>
+          <li><a href="#">상의</a></li>
+          <li><a href="#">하의</a></li>
+          <li><a href="#">원피스/스커트</a></li>
+          <li><a href="#">상하의세트</a></li>
+          <li><a href="#">홈웨어</a></li>
+        </ul>
+        <ul class="cell gray-txt">
+          <li><a href="#">BOYS</a></li>
+          <li><a href="#">아우터</a></li>
+          <li><a href="#">상의</a></li>
+          <li><a href="#">팬츠</a></li>
+          <li><a href="#">상하의세트</a></li>
+          <li><a href="#">홈웨어</a></li>
+        </ul>
+        <ul class="cell gray-txt">
+          <li><a href="#">ACC</a></li>
+          <li><a href="#">양말</a></li>
+          <li><a href="#">가방</a></li>
+          <li><a href="#">모자</a></li>
+          <li><a href="#">시즌웨어</a></li>
+          <li><a href="#">기타</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="right w50-box cell">
+      <div class="w100-box row">
+        
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/kids/1.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell">
+         <div class="h148-box background" style="background-image:url(./img/menu/kids/2.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="nav-2-big-depth">
+  <div class="nav-2-depth w100-box row con community">
+    <div class="left w50-box cell row">
+      <div class="section1 w25-box cell">
+        <ul>
+          <li><a href="#">LOOKBOOK</a></li>
+          <li><a href="#">SNAP</a></li>
+          <li><a href="#">SPAO TV</a></li>
+          <li><a href="#">REVIEW</a></li>
+          <li class="m-top"><a href="#">EVENT</a></li>
+        </ul>
+      </div>
+      <div class="section2 w50-box cell check">
+        <ul class="gray-txt">
+          <li><a href="#">출석체크</a></li>
+          <li><a href="#">실시간 리뷰</a></li>
+          <li><a href="#">베스트 리뷰어 발표</a></li>
+          <li><a href="#">진행 이벤트</a></li>
+          <li><a href="#">종료 이벤트</a></li>
+          <li><a href="#">당첨자 발표</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="right w50-box cell">
+      <div class="w100-box row">
+        
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/commu/1.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell m-right">
+         <div class="h148-box background" style="background-image:url(./img/menu/commu/2.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+        <div class="w33-box cell">
+         <div class="h148-box background" style="background-image:url(./img/menu/commu/3.jpg);"></div>
+          <div class="overlay-box text-align white-txt w100-box h148-box hover-box transition" style="background-color:#0005;">
+            <div class="txt-box">
+            <p>[포우먼] 날개사 라운드넥 스웨터_SPKWB4VW91</p> <br>
+            <del>25,900</del> <br>
+            23,310
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>  
+  <div class="bg"></div>
+</div>
+
+
+
+<div class="section section01 rel-box">
+  <div class="slider">
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/1.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/2.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/3.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/4.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/5.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/6.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/7.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/8.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/9.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/10.jpg);"></div>
+    </div>
+    <div class="w100-box">
+      <div class="h44-box background" style="background-image:url(./img/main-slide/11.jpg);"></div>
+    </div>
+  </div>
+  
+  <div class="dots-box ab-b ">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>   
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<div class="section section02 m-top rel-box">
+  <div class="con">
+    <h1 class="upper-case bold-txt text-align m-bottom">for the next step</h1>
+    <div class="slider w100-box">
+      <div class="w33-box">
+        <div class="h148-box background rel-box" style="background-image:url(./img/for-the-next-step/1.jpg);">
+                  <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> 크롭 윈드 브레이커 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">35,910 <del class="gray-txt f-16 m-right">39,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 107건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/2.jpg);">
+<div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>          
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> 후드형 윈드 브레이커 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 89건</p>
+        </div>
+
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/3.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> [남녀공용] 배색 윈드브레이커 (LIGHT KHAKI)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 467건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/4.jpg);">
+ <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>         
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> [남녀공용] 배색 윈드브레이커 (MINT)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 467건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/5.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> [남녀공용] 배색 윈드브레이커 (CREAM)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 467건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/6.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> [남녀공용] 배색 윈드브레이커 (BLUE)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 467건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/7.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> [남녀공용] 배색 윈드브레이커 (BLACK)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 467건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+      </div>
+      <div class="w33-box">
+        <div class="h148-box background" style="background-image:url(./img/for-the-next-step/8.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>
+        </div>
+        <div class="txt-box m-txt-top">
+          <p class="f-16"> [남녀공용] 배색 윈드브레이커 (LIGHT GRAY)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 467건</p>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="m-txt-top">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-box">
+      <div class="left-btn ab-ver-cen transition">
+        <img src="./img/png/main_arrow_left2.png" alt="">
+      </div>
+      <div class="right-btn ab-ver-cen transition">
+        <img src="./img/png/main_arrow_right2.png" alt="">
+      </div>
+    </div>
+  <div class="dots-box m-top">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<div class="section section03 m-top rel-box m-bottom">
+  <div class="con w100-box">
+    <h1 class="bold-txt text-align m-bottom">What's NEW</h1>
+    <div class="slider">
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/1.jpg);">
+      <div class="hover-box w100-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">그라데이션 스웨터 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">25,900 <del class="gray-txt f-16 m-right">39,900</del> <span class="f-16 red-txt">35%</span></p>
+          <p class="f-14 m-txt-top">리뷰 2건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/2.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16">루즈핏 썸머 베이직 셔츠 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">26,910 <del class="gray-txt f-16 m-right">29,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 0건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/3.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16">셀비지 턴업 스트레이트 진 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 5건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/4.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16">루즈핏 트러커 자켓 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 8건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/5.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16">셔츠 캉캉 플레어 원피스 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 4건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/6.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16">셔링 긴팔 티셔츠 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">23,310 <del class="gray-txt f-16 m-right">25,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 2건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/7.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16"> [데일리지] 오버롤 데님 팬츠 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 2건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/8.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16"> (우디) 자수가디건</p>
+          <p class="f-22 bold-txt m-right">35,910 <del class="gray-txt f-16 m-right">39,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 4건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/9.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16">베이직 블레이저 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">62,910 <del class="gray-txt f-16 m-right">69,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 2건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/10.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16"> [포우먼] 베이직 세미 오버핏 자켓 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">62,910 <del class="gray-txt f-16 m-right">69,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 4건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/11.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16"> 루즈핏 후드집업 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">32,910 <del class="gray-txt f-16 m-right">35,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 5건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+    <div class="w25-box">
+      <div class="h148-box background" style="background-image:url(./img/whats-new/12.jpg);">
+      <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+          <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+        </div>  
+      </div>
+      
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16"> (우디) 그래픽 스웨트 셔츠 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">32,310 <del class="gray-txt f-16 m-right">35,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top">리뷰 3건</p>                 
+          <a href="#" class="heart">
+              <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+    </div>
+  </div>
+    </div>
+  
+  <div class="btn-box">
+      <div class="left-btn ab-ver-cen transition">
+        <img src="./img/png/main_arrow_left2.png" alt="">
+      </div>
+      <div class="right-btn ab-ver-cen transition">
+        <img src="./img/png/main_arrow_right2.png" alt="">
+      </div>
+    </div>
+</div>
+
+<div class="section section04">
+  <div class="w100-box row">
+    <div class="w50-box cell">
+      <div class="h20-box background" style="background-image:url(./img/section4/1.jpg);"></div>
+    </div>
+    <div class="w50-box cell">
+      <div class="h20-box background" style="background-image:url(./img/section4/2.jpg);"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section section05 m-top">
+  <div class="con">
+    <h1 class="text-align">Weekly Best</h1>
+    <ul class="m-top f-20">
+      <li class="upper-case"><a href="#">women</a></li>
+      <li class="upper-case"><a href="#">men</a></li>
+      <li class="upper-case"><a href="#">kids</a></li>
+      <li class="upper-case m-right-del"><a href="#">collaboration</a></li>
+    </ul>
+    <div class="w100-box row m-top">
+      <div class="w25-box m-bottom cell m-right">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/1.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">[남녀공용] 배색 윈드브레이커 (LIGHT GRAY)</p>
+          <p class="f-22 bold-txt m-right">44,910 <del class="gray-txt f-16 m-right">49,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 467건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="" >
+          </a>
+          <img src="./img/custom_2716394483974526.gif" alt="" class="unisex">
+        </div>
+        <div class="box text-align white-txt f-22">1</div>
+      </div>
+      <div class="w25-box m-bottom cell m-right">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/2.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">크롭 윈드브레이커 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">35,910 <del class="gray-txt f-16 m-right">39,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 107건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">2</div>
+      </div>
+      <div class="w25-box m-bottom cell m-right">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/3.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">[데일리지] 스트레이트 진 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">36,900 <del class="gray-txt f-16 m-right">39,900</del> <span class="f-16 red-txt">8%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 152건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">3</div>
+      </div>
+      <div class="w25-box m-bottom cell ">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/4.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">[포우먼] VISCOSE 베이직 라운드넥 가디건 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">25,900 <del class="gray-txt f-16 m-right">29,900</del> <span class="f-16 red-txt">13%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 26건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">4</div>
+      </div>
+      <div class="w25-box m-bottom cell m-right">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/5.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">크롭 후드집업 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">26,910 <del class="gray-txt f-16 m-right">29,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 11건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">5</div>
+      </div>
+      <div class="w25-box m-bottom cell m-right">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/6.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">베이직 피케카라 원피스 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">17,910 <del class="gray-txt f-16 m-right">19,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 3건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">6</div>
+      </div>
+      <div class="w25-box m-bottom cell m-right">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/7.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">버튼 긴팔 티셔츠 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">17,910 <del class="gray-txt f-16 m-right">19,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 13건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">7</div>
+      </div>
+      <div class="w25-box m-bottom cell">
+        <div class="h148-box background" style="background-image:url(./img/weekly-best/women/8.jpg);">
+          <div class="w100-box hover-box h148-box transition overlay-box" style="background-color:#fff5;">
+            <img src="./img/icon_202101271630005300.png" alt="" class="ab-b ab-r">
+          </div>  
+        </div>
+
+        <div class="txt-box m-txt-top rel-box">
+          <p class="f-16 cell w90-box">[포우먼] 도톰폴리 숏 트렌치코트 _SPJJC23G22</p>
+          <p class="f-22 bold-txt m-right">62,910 <del class="gray-txt f-16 m-right">69,900</del> <span class="f-16 red-txt">10%</span></p>
+          <p class="f-14 m-txt-top gray-txt">리뷰 6건</p>                 <a href="#" class="heart">
+          <img src="./img/icon_202009041749300600.png" alt="">
+          </a>
+        </div>
+        <div class="box text-align white-txt f-22">8</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section section06 m-top">
+  <h1 class="text-align m-bottom">Photo Review +</h1>
+  <div class="con w100-box row m-bottom">
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-1.jpg);"></div>
+    </div>
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-2.jpg);"></div>
+    </div>
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-3.jpg);"></div>
+    </div>
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-4.jpg);"></div>
+    </div>
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-5.jpg);"></div>
+    </div>
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-6.jpg);"></div>
+    </div>
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-7.jpg);"></div>
+    </div>   
+    <div class="w16-box cell">
+      <div class="h91-box background" style="background-image:url(./img/photo-review/1-8.jpg);"></div>
+    </div>      
+  </div>
+
+  <div class="w100-box num">
+    <ul>
+      <li><a href="#">&lt;</a></li>
+      <li>
+        <a href="#">1</a>
+        <div class="gray-box"></div>
+      </li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">6</a></li>
+      <li><a href="#">&gt;</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="section section07 m-top">
+  <h1 class="text-align m-bottom">Trend</h1>
+  <div class="trend row">
+    <div class="left cell">
+      <div class="w100-box m-bottom">
+      <div class="h55-box h-background transition" style="background-image:url(./img/trend/left/1.jpg);"></div>
+      <div class="w100-box h55-box overlay-box" style="background-color: #fff5;"></div>
+      <div class="txt-box m-txt-top text-align">
+        <p class="f-20 bold-txt">스파오 X 머니사이드업 | My MBTI is RICH</p>
+      </div>
+     </div>
+      <div class="w100-box">
+      <div class="h55-box h-background transition" style="background-image:url(./img/trend/left/2.jpg);"></div>
+      <div class="w100-box h55-box overlay-box" style="background-color: #fff5;"></div>
+      <div class="txt-box m-txt-top text-align">
+        <p class="f-20 bold-txt">스파오 X 종이의 집</p>
+      </div>
+     </div>
+    </div>
+    <div class="right cell">
+      <div class="w100-box m-bottom">
+      <div class="h55-box h-background transition" style="background-image:url(./img/trend/right/1.jpg);"></div>
+      <div class="w100-box h55-box overlay-box" style="background-color: #fff5;"></div>
+      <div class="txt-box m-txt-top text-align">
+        <p class="f-20 bold-txt upper-case">washable sweater | 마음에 쏙 드는 스웨터 한 벌로 시작하는 한 해</p>
+      </div>
+     </div>
+      <div class="w100-box">
+      <div class="h55-box h-background transition" style="background-image:url(./img/trend/right/2.jpg);"></div>
+      <div class="w100-box h55-box overlay-box" style="background-color: #fff5;"></div>
+      <div class="txt-box m-txt-top text-align">
+        <p class="f-20 bold-txt">해리포터 : 마법사의 돌 20주년 기획전</p>
+      </div>
+     </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="section section08 m-top">
+  <h1 class="text-align m-bottom">LookBook</h1>
+  <div class="slider-wrap">
+    <div class="slider">
+      <div class="con w100-box">
+        <div class="w50-box">          
+          <div class="w100-box txt-box">
+          <p class="white-txt f-20 bold-txt ab-l ab-t">우디와 함께 위트를 더한 클래식 써머룩</p>
+            <span class="white-txt bold-txt ab-cen text-align">WOODIE</span>
+            </div> 
+          <div class="h68-box h-background transition" style="background-image:url(./img/lookbook/1.jpg);"></div>
+           <div class="overlay-box transition"></div>
+
+        </div>
+        <div class="w50-box">
+          <div class="w100-box txt-box">
+          <p class="white-txt f-20 bold-txt ab-l ab-t">가벼운 발걸음을 위한 윈드 브레이커</p>
+            <span class="white-txt bold-txt ab-cen text-align">FOR THE NEXT STEP</span>
+            </div> 
+          <div class="h68-box h-background transition" style="background-image:url(./img/lookbook/2.jpg);"></div>
+          <div class="overlay-box transition"></div>
+        </div>
+        <div class="w50-box">
+          <div class="w100-box txt-box">
+          <p class="white-txt f-20 bold-txt ab-l ab-t">Simple & Confort</p>
+            <span class="white-txt bold-txt ab-cen text-align">CITY BOY</span>
+            </div> 
+          <div class="h68-box h-background transition" style="background-image:url(./img/lookbook/3.jpg);"></div> 
+        <div class="overlay-box transition"></div>
+        </div>
+        <div class="w50-box">
+          <div class="w100-box txt-box">
+          <p class="white-txt f-20 bold-txt ab-l ab-t">평범함을 넘어 새로운 기준이 됩니다</p>
+            <span class="white-txt bold-txt ab-cen text-align">22'NEW BASIC SET-UP</span>
+            </div> 
+          <div class="h68-box h-background transition" style="background-image:url(./img/lookbook/4.jpg);"></div>
+          <div class="overlay-box transition"></div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section09 m-top rel-box">
+  <div class="con">
+    <h1 class="text-align m-bottom">Snap</h1>
+    <div class="slider-wrap">
+      <div class="slider w100-box">
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/1.jpeg);"></div>
+          <div class="overlay-box w100-box h100-box hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#남자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">하지원</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/2.jpg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">최현지</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/3.jpeg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">지가영</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/4.jpeg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">편경아</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/5.jpg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">정지은</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/6.jpeg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">홍서현</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/7.jpg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">정소의</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/8.jpg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#남자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">최준규</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/9.jpg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#여자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">조연경</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+        <div class="content w20-box">
+          <div class="h100-box background" style="background-image:url(./img/snap/10.jpeg);"></div>
+          <div class="overlay-box w100-box h100-box  hover-box transition" style="background-color:#0005;">
+            <p class="white-txt ab-cen">#2022#남자#캐주얼룩</p>
+            <p class="ab-l ab-b white-txt">최현우</p>
+            <p class="ab-r ab-b white-txt">인플루언서</p>
+          </div>
+        </div>
+      </div> 
+    </div>
     
+  </div>
+  <div class="btn-box">
+      <div class="left-btn ab-ver-cen transition">
+        <img src="./img/png/main_arrow_left2.png" alt="">
+      </div>
+      <div class="right-btn ab-ver-cen transition">
+        <img src="./img/png/main_arrow_right2.png" alt="">
+      </div>
+    </div>
+</div>
+
+<div class="footer-wrap m-top">
+  <div class="footer con row rel-box">
+    <div class="left cell">
+      <div class="txt-box1 m-bottom">
+        <p class="f-22 bold-txt">1670-9600</p>
+        <p class="f-14">상담시간: 오전10시~오후5시 (토요일,공휴일 휴무)</p>
+        <p class="f-14 gray-txt">email:spao@eland.co.kr(단체주문 문의)</p>
+        <p class="f-14 gray-txt">email:spao_mkt@eland.co.kr (마케팅 협찬 문의)</p>
+      </div>
+      <div class="txt-box2 m-bottom">
+        <p class="f-14 gray-txt">(주)이랜드월드패션사업부 | 사업자등록번호 : 113-85-19030 [사업자정보확인] | 통신판매업 신고번호 : 제 2005-01053 호</p>
+        <p class="f-14 gray-txt">대표이사 : 최운식/최종양 | 서울특별시 금천구 가산디지털1로 159(가산동) 이랜드가산동사옥 | 개인정보 보호책임자 : 최운식</p>
+        <p class="f-14 gray-txt">사옥 주소로 상품을 발송하시면 교환ㆍ환불이 불가하므로, 교환ㆍ환불은 사이트 내에서 신청해주시기 바랍니다. </p>
+      </div>
+      <div class="icon-box row">
+        <div class="icon cell m-right">
+          <img src="./img/png/bt_sns_face.png" alt="">
+        </div>
+        <div class="icon cell m-right">
+          <img src="./img/png/bt_sns_insta.png" alt="">
+        </div>
+        <div class="icon cell m-right">
+          <img src="./img/png/bt_sns_you.png" alt="">
+        </div>
+        <div class="icon cell m-right">
+          <img src="./img/png/bt_sns_blog.png" alt="">
+        </div>
+        <div class="icon cell m-right">
+          <img src="./img/png/bt_sns_post.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="right cell-r row rel-box">
+      <ul class="cell f-14 gray-txt">
+        <li><a href="#">브랜드소개</a></li>
+        <li><a href="#">오프라인 매장안내</a></li>
+      </ul>
+      <ul class="cell f-14 gray-txt">
+        <li class="bold-txt"><a href="#">개인정보 처리방침</a></li>
+        <li><a href="#">약관안내</a></li>
+        <li><a href="#">윤리경영</a></li>
+      </ul>
+      <ul class="cell f-14 gray-txt">
+        <li><a href="#">공지사항</a></li>
+        <li><a href="#">회원혜택</a></li>
+        <li><a href="#">채용정보 및 인사제도</a></li>
+        <li><a href="#">자주묻는질문 FAQ</a></li>
+      </ul>
+    </div>
+    <div class="btn-wrap">
+      <div class="btn text-align f-14">
+        <span>패밀리사이트</span> <img src="./img/bt_icon_family.png" alt="">
+      </div>
+      <div class="btn2 text-align f-14">
+        <ul>
+          <li><a href="#">이랜드그룹</a></li>
+          <li><a href="#">베어스타운</a></li>
+          <li><a href="#">서울이랜드FC</a></li>
+          <li><a href="#">올리브스튜디오</a></li>
+          <li><a href="#">이랜드리테일</a></li>
+          <li><a href="#">이랜드외식브랜드</a></li>
+          
+          <li><a href="#">패밀리사이트
+            <img src="./img/bt_icon_family.png" alt=""></a></li>
+        </ul>  
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom row con">
+    <div class="left cell">
+      <p class="f-14 gray-txt">Copyright ⓒ 스파오닷컴 All Right Reserved.</p>
+    </div>
+    <div class="right cell-r row">
+      <div class="icon cell m-right rel-box">
+        <img src="./img/png/bt_icon_lgec.png" alt="" class="ab-ver-cen">
+        <span class="f-14">구매안전 {에스크로} 서비스</span>
+      </div>
+      <div class="icon cell m-right rel-box">
+        <div class="ab-ver-cen">
+        <img src="./img/png/bt_icon_app01 (1).png" alt="">
+        <img src="./img/png/bt_icon_app02 (1).png" alt="">
+        </div>  
+        <span class="f-14">스파오 APP 다운로드</span>
+      </div>
+      <div class="icon cell rel-box">
+        <img src="./img/png/bt_icon_global.png" alt="" class="ab-ver-cen">
+        <span class="f-14">대한민국 | 한국어 </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="go-btn">  
+  <div class="kakao transition">
+    <img src="./img/png/quick_kakao.svg" alt="">
+  </div>
+  <div class="go-top transition">
+  <img src="./img/png/q_r_top.png" alt="">
+</div>
+<div class="go-down transition">
+  <img src="./img/png/q_r_bt.png" alt="">
+</div>
+</div>
+
 </body>
 </html>
