@@ -323,8 +323,6 @@ a{
   background-color: white;
   z-index:301000;
   position:absolute;
-  opacity:1;
-  visibility:visible;
   top:0px;
   left:50%;
   transform:translatex(-50%);
@@ -336,6 +334,10 @@ a{
   background-color: #0005;
   position:absolute;
   z-index:30000;
+  opacity: 0;
+  visibility: hidden;
+}
+.nav-2-depth-wrap>.bg.active{
   opacity: 1;
   visibility: visible;
 }
@@ -700,6 +702,13 @@ a{
 }
 .section08>.slider-wrap .slider .w50-box > .txt-box>span{
   font-size:50px;
+}
+.section08>.slider-wrap>.slider .con>.slick-list{
+  overflow: visible;
+}
+.section08>.slider-wrap>.slider .con>.slick-arrow{
+  opacity: 0;
+  visibility: hidden;
 }
 /* section08 en */
 /* section09 st */

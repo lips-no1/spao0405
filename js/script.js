@@ -59,7 +59,7 @@ $(".nav-2-depth-wrap>.bg").mouseover(function(){
     $('.section03>.con .slider').slick({
       slidesToShow:4,
       sliderToScroll:1,
-      autoplay:false,
+      autoplay:true,
     })
     $(".section03>.btn-box>.left-btn").click(function(){
         $(".section03>.con .slider").slick('slickPrev')
@@ -92,4 +92,12 @@ $(".nav-2-depth-wrap>.bg").mouseover(function(){
         "scrollTop":0,
       },1000)
     })
+
+$(".go-btn>.go-down").click(function(){
+
+  $("html,body").animate({
+    "scrollTop": $(document).height() ,
+  },1000)
+})
+
   });
